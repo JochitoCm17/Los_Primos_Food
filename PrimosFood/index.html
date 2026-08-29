@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Los Primos Food – El Mejor Sabor 🔥</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fire: '#FF4500', ember: '#E63946', gold: '#FFD700',
+            dark: '#0b0b0b', card: '#161616',
+          },
+          fontFamily: {
+            sans: ['Poppins','sans-serif'],
+            display: ['Montserrat','sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    *{box-sizing:border-box}
+    body{background:#0b0b0b;font-family:'Poppins',sans-serif;color:#f0f0f0;overflow-x:hidden}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0b0b0b}::-webkit-scrollbar-thumb{background:#FF4500;border-radius:4px}
+    
+    .hero-bg-fixed {
+      background-color: #0b0b0b;
+      background-image: radial-gradient(circle at 50% 20%, rgba(255, 69, 0, 0.15) 0%, rgba(11, 11, 11, 1) 75%);
+    }
+
+    .neon-fire{box-shadow:0 0 15px rgba(255,69,0,.3)}
+    .glass-card{background:rgba(22,22,22,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);transition:all .3s ease}
+    .glass-card:hover{border-color:rgba(255,69,0,.5);box-shadow:0 8px 25px rgba(255,69,0,.2);transform:translateY(-3px)}
+    
+    .navbar-blur{background:rgba(11,11,11,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,69,0,.2)}
+    
+    @keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}50%{box-shadow:0 0 0 10px rgba(34,197,94,0)}}
+    .pulse-btn{animation:pulse-green 2s infinite}
+    
+    @keyframes fire-shimmer{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+    .fire-badge{display:inline-block;animation:fire-shimmer 1.8s ease-in-out infinite}
+    
+    .gradient-text{background:linear-gradient(135deg,#FF4500 0%,#FFD700 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    
+    .btn-fire{background:linear-gradient(135deg,#FF4500,#E63946);transition:all .3s ease}
+    .btn-fire:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,69,0,.5)}
+    
+    .menu-img-wrap{overflow:hidden;border-radius:12px 12px 0 0}
+    .menu-img-wrap img{transition:transform .4s ease;width:100%;height:200px;object-fit:cover}
+    .glass-card:hover .menu-img-wrap img{transform:scale(1.06)}
+    
+    .tab-btn{padding:.5rem 1.25rem;border-radius:9999px;font-size:.875rem;font-weight:600;transition:all .25s ease;border:1px solid rgba(255,255,255,.1);color:#aaa;background:rgba(255,255,255,.03)}
+    .tab-btn.active{background:linear-gradient(135deg,#FF4500,#E63946);color:#fff;border-color:transparent;box-shadow:0 4px 15px rgba(255,69,0,.4)}
+    
+    .wa-float{position:fixed;bottom:24px;right:24px;z-index:999;width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:white;text-decoration:none;animation:pulse-green 2s infinite;transition:transform .3s ease}
+    .wa-float:hover{transform:scale(1.15)}
+    
+    .separator{height:2px;background:linear-gradient(90deg,transparent,#FF4500,transparent)}
+  </style>
+</head>
+
+<body class="bg-[#0b0b0b]" x-data="app()" x-init="init()">
+
+  <!-- ═══ NAVBAR ═══ -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    :class="scrolled ? 'navbar-blur' : 'bg-[#0b0b0b]/80 backdrop-blur-md'">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+      <a href="#" class="flex items-center gap-2.5 group">
+        <img src="logo.jpeg" alt="Los Primos Food" class="w-10 h-10 rounded-full object-cover border-2 border-fire group-hover:border-gold transition-colors duration-300" />
+        
+        <div class="leading-tight">
+          <div class="font-display font-900 text-sm sm:text-base text-white tracking-wide">LOS PRIMOS</div>
+          <div class="font-display font-700 text-xs gradient-text tracking-widest">FOOD 🌶️</div>
+        </div>
+      </a>
+
+      <a href="https://wa.me/50431726979?text=Hola%20Los%20Primos%20Food!%20Quisiera%20hacer%20un%20pedido%20%F0%9F%94%A5" target="_blank"
+        class="pulse-btn flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white text-xs sm:text-sm font-700 px-4 py-2 rounded-full transition-all duration-300 shadow-lg">
+        <i class="fab fa-whatsapp text-base"></i>
+        <span>Ordená aquí</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero-bg-fixed relative min-h-screen flex items-center pt-20 pb-12 px-4 sm:px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-10 items-center">
+      
+      <!-- Imagen Primero en Móvil -->
+      <div class="order-1 lg:order-2 flex justify-center">
+        <div class="relative w-full max-w-sm sm:max-w-md">
+          <div class="absolute inset-0 bg-fire/20 rounded-3xl blur-xl"></div>
+          <img src="banner.jpeg" alt="Los Primos Food Especialidades" class="relative rounded-3xl object-cover w-full h-[280px] sm:h-[380px] shadow-2xl border border-white/10" />
+        </div>
+      </div>
+
+      <!-- Texto Hero -->
+      <div class="order-2 lg:order-1 text-center lg:text-left">
+        
+        <div class="inline-flex items-center gap-2 bg-fire/20 border border-fire/50 rounded-full px-4 py-1.5 text-xs sm:text-sm font-600 text-orange-200 mb-6 neon-fire">
+          <span class="fire-badge">🔥</span>
+          <span>Taqueadas listas para tu evento</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        </div>
+
+        <h1 class="font-display font-900 text-4xl sm:text-5xl lg:text-6xl leading-tight mb-4 text-white">
+          Cuando el antojo<br>
+          pide <span class="gradient-text">sabor de verdad</span><br>
+          <span class="text-white text-3xl sm:text-4xl lg:text-5xl">llegan Los Primos</span> 🔥
+        </h1>
+
+        <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 max-w-xl mx-auto lg:mx-0">
+          🍗 <strong>Alitas bien bañadas</strong> · 🥓 <strong>Boneless crujientitos</strong> · 🌮 <strong>Taqueadas con todo</strong> · 🍺 <strong>Micheladas heladitas</strong>. El sabor catracho de la Kennedy que te hace volver por más. ✨
+        </p>
+
+        <div class="flex items-center justify-center lg:justify-start gap-1 mb-8">
+          <span class="text-yellow-400 text-base">⭐⭐⭐⭐⭐</span>
+          <span class="text-gray-300 font-600 text-xs sm:text-sm ml-2">Antojo resuelto en Tegus 🇭🇳</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <a href="#menu" class="btn-fire text-white font-700 px-7 py-3.5 rounded-2xl text-center text-base inline-flex items-center justify-center gap-2 shadow-lg">
+            <i class="fas fa-utensils"></i> Mirá el menú y antojate 😋
+          </a>
+
+          <a href="https://wa.me/50431726979?text=Hola%20Los%20Primos%20Food!%20Quisiera%20hacer%20un%20pedido%20%F0%9F%94%A5" target="_blank"
+            class="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-700 px-7 py-3.5 rounded-2xl transition-all duration-300 text-base shadow-lg border border-emerald-400/30">
+            <i class="fab fa-whatsapp text-xl"></i> ¡Se me antojó! Pedir ya 📲
+          </a>
+        </div>
+
+        <div class="flex flex-wrap justify-center lg:justify-start gap-2.5 mt-8">
+          <span class="bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 text-xs text-gray-300 flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-fire"></i> Col. Kennedy</span>
+          <span class="bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 text-xs text-gray-300 flex items-center gap-1.5"><i class="fas fa-clock text-gold"></i> Lun–Dom 10am–10pm</span>
+          <span class="bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 text-xs text-gray-300 flex items-center gap-1.5"><i class="fas fa-motorcycle text-emerald-400"></i> Express 🛵</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN DEL MENÚ ═══ -->
+  <section id="menu" class="py-16 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="font-display font-900 text-3xl sm:text-4xl mb-3 text-white">
+        Nuestro <span class="gradient-text">Menú Sabroso</span> 🔥
+      </h2>
+      <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto">
+        Escogé tu favorito, abrí el apetito y mandanos tu pedido por WhatsApp. 📲
+      </p>
+      <div class="separator my-6 max-w-xs mx-auto"></div>
+
+      <!-- Filtros / Categorías -->
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mt-6">
+        <template x-for="cat in categories" :key="cat.id">
+          <button 
+            @click="activeCategory = cat.id"
+            :class="activeCategory === cat.id ? 'active' : ''"
+            class="tab-btn">
+            <span x-text="cat.icon" class="mr-1"></span>
+            <span x-text="cat.name"></span>
+          </button>
+        </template>
+      </div>
+    </div>
+
+    <!-- Grid de Platillos Generados dinámicamente -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <template x-for="item in filteredItems" :key="item.id">
+        <div class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="menu-img-wrap relative">
+              <img :src="item.image" :alt="item.title" loading="lazy">
+              <template x-if="item.badge">
+                <span class="absolute top-3 right-3 bg-fire text-white text-xs font-700 px-3 py-1 rounded-full uppercase tracking-wider shadow-lg" x-text="item.badge"></span>
+              </template>
+            </div>
+            <div class="p-5">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-lg text-white" x-text="item.title"></h3>
+                <span class="text-gold font-extrabold text-lg" x-text="'L. ' + item.price"></span>
+              </div>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4" x-text="item.description"></p>
+            </div>
+          </div>
+          
+          <div class="p-5 pt-0">
+            <a :href="'https://wa.me/50431726979?text=Hola!%20Quiero%20pedir:%20' + encodeURIComponent(item.title)" 
+               target="_blank" 
+               class="w-full btn-fire text-white font-600 py-2.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow-md">
+              <i class="fab fa-whatsapp text-lg"></i> Lo quiero probar 😋
+            </a>
+          </div>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <!-- ═══ SECCIÓN EVENTOS Y TAQUEADAS ═══ -->
+  <section id="eventos" class="py-12 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="glass-card p-6 sm:p-10 rounded-3xl relative overflow-hidden border border-fire/30">
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="text-fire text-xs font-700 uppercase tracking-widest flex items-center gap-1.5 mb-2">
+            <i class="fas fa-star"></i> Servicio Especial Banquetes
+          </span>
+          
+          <h2 class="font-display font-900 text-3xl sm:text-4xl text-white mb-4">
+            ¿Tienes un evento? <br><span class="gradient-text">¡Llevamos la Taqueada! 🌮🎉</span>
+          </h2>
+          <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">
+            Vos poné la música y reuní a la mara; nosotros llevamos la taqueada que se roba los aplausos. Carnes bien sazonadas, tortillas recién calientitas, chismol fresco y salsas caseras para que nadie se quede con el antojo. 🤤
+          </p>
+          <ul class="space-y-2.5 mb-8 text-sm text-gray-300">
+            <li class="flex items-center gap-2.5"><span class="text-emerald-400">✅</span> Ideal para cumples, convivios, reuniones y celebraciones grandes.</li>
+            <li class="flex items-center gap-2.5"><span class="text-emerald-400">✅</span> Montaje listo para servir, con todos los acompañamientos.</li>
+            <li class="flex items-center gap-2.5"><span class="text-emerald-400">✅</span> Cotización a tu medida para consentir a cada invitado.</li>
+          </ul>
+
+          <a href="https://wa.me/50431726979?text=Hola!%20Me%20interesa%20cotizar%20un%20servicio%20de%20Taqueada%20para%20un%20evento" 
+             target="_blank" 
+             class="btn-fire text-white font-700 px-7 py-3 rounded-xl inline-flex items-center gap-2 shadow-lg">
+            <i class="fab fa-whatsapp text-lg"></i> Quiero mi taqueada 🎉
+          </a>
+        </div>
+        
+        <div class="flex justify-center">
+          <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80" alt="Taqueadas para eventos" class="rounded-2xl border border-white/10 shadow-2xl object-cover h-72 w-full" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ UBICACIÓN Y CONTACTO ═══ -->
+  <section id="contacto" class="py-12 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="font-display font-900 text-3xl sm:text-4xl mb-2 text-white">
+        ¿Dónde estamos <span class="gradient-text">ubicados</span>? 📍
+      </h2>
+      <p class="text-gray-400 text-sm sm:text-base">Pasa a traer tu pedido o visítanos directo 🚗💨</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 items-center">
+      <div class="space-y-4">
+        
+        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 border border-fire/20">
+          <div class="bg-fire/20 p-3.5 rounded-2xl text-fire text-2xl flex items-center justify-center">📍</div>
+          <div>
+            <h4 class="font-bold text-white text-base">Dirección</h4>
+            <p class="text-gray-300 text-xs sm:text-sm">Farma-Clínicas De La Comunidad, Tegucigalpa, Honduras.</p>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 border border-gold/20">
+          <div class="bg-gold/20 p-3.5 rounded-2xl text-gold text-2xl flex items-center justify-center">⏰</div>
+          <div>
+            <h4 class="font-bold text-white text-base">Horario de Atención</h4>
+            <p class="text-gray-300 text-xs sm:text-sm">Lunes a Domingo: 10:00 AM – 10:00 PM</p>
+          </div>
+        </div>
+
+        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 border border-emerald-500/20">
+          <div class="bg-emerald-500/20 p-3.5 rounded-2xl text-emerald-400 text-2xl flex items-center justify-center">📲</div>
+          <div>
+            <h4 class="font-bold text-white text-base">Pedidos y Consultas</h4>
+            <p class="text-emerald-400 font-semibold text-sm">+504 3172-6979</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mapa Google Embed Actualizado con tus Coordenadas Exactas -->
+      <div class="rounded-2xl overflow-hidden glass-card border border-white/10 h-72 shadow-xl">
+        <iframe 
+          title="Ubicación Los Primos Food"
+          src="https://maps.google.com/maps?q=14.062769,-87.178924&hl=es&z=17&output=embed" 
+          width="100%" 
+          height="100%" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="border-t border-white/10 py-8 px-4 text-center text-xs text-gray-500">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="font-display font-700 text-sm text-white">
+        LOS PRIMOS <span class="gradient-text">FOOD 🔥</span>
+      </div>
+      <p>© 2026 Los Primos Food. La Mera Sabrosura. 🇭🇳</p>
+      
+      <div class="flex gap-4 text-lg">
+        <a href="#" class="text-gray-400 hover:text-fire transition-colors"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="text-gray-400 hover:text-fire transition-colors"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/50431726979" class="text-gray-400 hover:text-emerald-400 transition-colors"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ BOTÓN FLOTANTE WHATSAPP ═══ -->
+  <a href="https://wa.me/50431726979?text=Hola%20Los%20Primos%20Food!%20Quisiera%20hacer%20un%20pedido%20%F0%9F%94%A5" 
+     target="_blank" 
+     class="wa-float shadow-2xl" 
+     title="Pedí por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ═══ LÓGICA ALPINE.JS ═══ -->
+  <script>
+    function app() {
+      return {
+        scrolled: false,
+        activeCategory: 'all',
+        categories: [
+          { id: 'all', name: 'Todo', icon: '🔥' },
+          { id: 'alitas', name: 'Alitas y Boneless', icon: '🍗' },
+          { id: 'eventos', name: 'Taqueadas Eventos', icon: '🌮' },
+          { id: 'bebidas', name: 'Micheladas', icon: '🍺' }
+        ],
+        
+        items: [
+          {
+            id: 1,
+            category: 'alitas',
+            title: 'Combo Alitas Primos 🍗',
+            description: 'Alitas doraditas, jugosas y bien bañadas en BBQ, Búfalo o Maracuyá. Vienen con papitas para que el antojo quede feliz de principio a fin.',
+            price: '165',
+            badge: 'Más Vendido 🔥',
+            image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=600&q=80'
+          },
+          {
+            id: 2,
+            category: 'alitas',
+            title: 'Boneless Crujientes 🥓',
+            description: 'Trocitos de pechuga tierna, empanizados hasta quedar crujientitos y bañados en tu salsa favorita, con Ranch cremosito para el toque final.',
+            price: '150',
+            badge: 'Popular ⭐',
+            image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=600&q=80'
+          },
+          {
+            id: 3,
+            category: 'eventos',
+            title: 'Servicio de Taqueada 🌮',
+            description: 'La fiesta se pone buena con carne asada, pastor, tortillas calientitas, chismol fresco y salsas caseras. Nosotros llevamos el sabor; vos disfrutá.',
+            price: 'Cotizar',
+            badge: 'Eventos 🎉',
+            image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80'
+          },
+          {
+            id: 4,
+            category: 'bebidas',
+            title: 'Michelada la Primitiva 🍺',
+            description: 'Cerveza bien fría, Clamato, limón al punto y un escarchado picosito que despierta el antojo. La compañera perfecta para unas alitas.',
+            price: '90',
+            badge: 'Heladita ❄️',
+            image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80'
+          }
+        ],
+        init() {
+          window.addEventListener('scroll', () => {
+            this.scrolled = window.scrollY > 20;
+          });
+        },
+        get filteredItems() {
+          if (this.activeCategory === 'all') return this.items;
+          return this.items.filter(item => item.category === this.activeCategory);
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
